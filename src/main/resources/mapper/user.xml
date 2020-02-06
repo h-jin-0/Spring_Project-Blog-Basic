@@ -2,12 +2,19 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hj.springBlog.repository.BlogRepository">
+<mapper namespace="com.hj.springBlog.repository.UserRepository">
 
-<!-- 	<select id="TeamAll" resultType="com.hj.springBlog.dto.ResponseTeamDto">
-		select * from team order by id desc
-	</select> -->
+	<select id="findAll" resultType="com.hj.springBlog.model.user.User">
+		select * from user order by id desc
+	</select>
 
-
-
+	<insert id="save">
+		insert into user(username,password,email,createDate) 
+		values(#{username},#{password},#{email},now()) 
+	</insert>
+	
+	<select id="findByUsername" resultType="int">
+		select count(*) from user where username=#{username}
+	</select>
+	
 </mapper>

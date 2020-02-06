@@ -1,13 +1,11 @@
-package com.hj.springBlog.model;
+package com.hj.springBlog.model.post;
 
 import java.sql.Timestamp;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 public class Post {
 	private int id;
 	private String title;

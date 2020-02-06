@@ -2,11 +2,11 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hj.springBlog.repository.BlogRepository">
+<mapper namespace="com.hj.springBlog.repository.CommentRepository">
 
-<!-- 	<select id="TeamAll" resultType="com.hj.springBlog.dto.ResponseTeamDto">
-		select * from team order by id desc
-	</select> -->
+<select id="findAll" resultType="com.hj.springBlog.model.comment.Comment">
+		select * from user comment by id desc
+	</select>
 
 
 

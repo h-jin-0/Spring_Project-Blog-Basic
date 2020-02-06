@@ -1,13 +1,11 @@
-package com.hj.springBlog.model;
+package com.hj.springBlog.model.comment;
 
 import java.sql.Timestamp;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 public class Comment {
 	private int id;
 	private int userId;

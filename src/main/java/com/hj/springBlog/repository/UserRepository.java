@@ -1,8 +1,10 @@
 package com.hj.springBlog.repository;
 
+import com.hj.springBlog.model.user.dto.ReqJoinDto;
+
 public interface UserRepository {
 
-//	List<ResponseTeamDto> TeamAll();
-	
+	int save(ReqJoinDto dto);
+	int findByUsername(String username);
 
 }
