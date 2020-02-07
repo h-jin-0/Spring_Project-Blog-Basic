@@ -48,24 +48,21 @@ public class UserController {
 	@GetMapping("/user/logout")
 	public String logout() {
 		session.invalidate();
-		return "redirect:/";//이러면 location.href와 같은거고, response.sendRedirect와 같은거다
+		return "redirect:/";// 이러면 location.href와 같은거고, response.sendRedirect와 같은거다
 	}
 
 	// 인증, 동일인 체크
 	@GetMapping("/user/profile/{id}")
 	public String profile(@PathVariable int id) {
-		User principal=(User)session.getAttribute("principal");
-		if(principal!=null) {
-			if(principal.getId()==id) {
-				return "/user/profile";
-			}else {
-				//잘못된 접근입니다.-권한이 없습니다.
-				return "/user/login";
-			}
-		}else {
-			//인증이 되지 않은 사용자입니다-로그인해주세요
+		User principal = (User) session.getAttribute("principal");
+
+		if (principal.getId() == id) {
+			return "/user/profile";
+		} else {
+			// 잘못된 접근입니다.-권한이 없습니다.
 			return "/user/login";
 		}
+
 	}
 
 	// 메세지 컨버터는 request받을 때 setter로 호출한다.

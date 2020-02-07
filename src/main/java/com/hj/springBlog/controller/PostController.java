@@ -30,30 +30,20 @@ public class PostController {
 	// 인증체크(세션이 있어야 글쓰기 가능)
 	@GetMapping("/post/write")
 	public String write() {
-		if (session.getAttribute("principal") != null) {
-			return "/post/write";
-		} else {
-			return "redirect:/user/login";
-		}
+		return "/post/write";
 	}
 
 	// 인증 체크, 동일인 체크
 	@GetMapping("/post/update/{id}")
 	public String update(@PathVariable int id) {
+		User principal = (User) session.getAttribute("principal");
 		
-		User principal=(User)session.getAttribute("principal");
-		if(principal!=null) {
-			if(principal.getId()==id) {
-				return "/user/profile";
-			}else {
-				//잘못된 접근입니다.-권한이 없습니다.
-				return "/user/login";
-			}
-		}else {
-			//인증이 되지 않은 사용자입니다-로그인해주세요
+		if (principal.getId() == id) {
+			return "/post/update";
+		} else {
 			return "/user/login";
 		}
-		
+
 	}
 
 }
