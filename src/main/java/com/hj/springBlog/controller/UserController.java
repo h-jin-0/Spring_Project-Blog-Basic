@@ -24,6 +24,8 @@ import com.hj.springBlog.model.user.dto.ReqJoinDto;
 import com.hj.springBlog.model.user.dto.ReqLoginDto;
 import com.hj.springBlog.service.UserService;
 
+//릴리즈 가지 연습
+
 @Controller
 public class UserController {
 
