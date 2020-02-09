@@ -8,6 +8,7 @@ import com.hj.springBlog.model.ReturnCode;
 import com.hj.springBlog.model.user.User;
 import com.hj.springBlog.model.user.dto.ReqJoinDto;
 import com.hj.springBlog.model.user.dto.ReqLoginDto;
+import com.hj.springBlog.model.user.dto.ReqProfileDto;
 import com.hj.springBlog.repository.UserRepository;
 
 @Service
@@ -35,5 +36,10 @@ public class UserService {
 	@Transactional
 	public User 로그인(ReqLoginDto dto) {
 		return userRepository.findByUsernameAndPassword(dto);
+	}
+	@Transactional
+	public int 회원수정(ReqProfileDto dto) {
+
+		return userRepository.update(dto);
 	}
 }

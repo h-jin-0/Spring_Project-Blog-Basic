@@ -4,10 +4,28 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hj.springBlog.repository.PostRepository">
 
-<select id="findAll" resultType="com.hj.springBlog.model.post.Post">
-		select * from post by id desc
+	<select id="findAll"
+		resultType="com.hj.springBlog.model.post.Post">
+		select * from post
 	</select>
 
+	<insert id="save">
+		insert into post(title,content,userId,createDate)
+		values(#{title},#{content},#{userId},now())
+	</insert>
 
+	<select id="findById"
+		resultType="com.hj.springBlog.model.post.Post">
+		select id,title,content,userId,createDate from post where
+		id=#{postId}
+	</select>
+
+	<update id="update">
+		update post set title=#{title}, content=#{content} where id=#{id}
+	</update>
+	
+	<delete id="delete">
+		delete from post where id=#{id}
+	</delete>
 
 </mapper>
