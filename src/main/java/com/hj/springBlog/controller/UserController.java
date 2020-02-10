@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hj.springBlog.model.RespCM;
@@ -38,9 +39,9 @@ import com.hj.springBlog.service.UserService;
 public class UserController {
 
 	private static final String TAG = "UserContriller : ";
-	
+
 	@Value("${file.path}")
-	private String fileRealPath;//서버에 배포하면 경로 변경해야함!!!!!
+	private String fileRealPath;// 서버에 배포하면 경로 변경해야함!!!!!
 
 	@Autowired
 	private UserService userService;
@@ -78,28 +79,39 @@ public class UserController {
 
 	}
 
+	// form:form 사용함!!
 	@PutMapping("/user/profile")
-	public ResponseEntity<?> profile(int id,String password, @RequestParam MultipartFile profile) {
+	public @ResponseBody String profile(int id, String password, @RequestParam MultipartFile profile) {
 
-		UUID uuid =UUID.randomUUID();
-		String uuidFilename=uuid+"_"+profile.getOriginalFilename();
-		
-		Path filePath=Paths.get(fileRealPath+uuidFilename);
+		UUID uuid = UUID.randomUUID();
+		String uuidFilename = uuid + "_" + profile.getOriginalFilename();
+
+		Path filePath = Paths.get(fileRealPath + uuidFilename);
 
 		try {
 			Files.write(filePath, profile.getBytes());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		ReqProfileDto dto = new ReqProfileDto(id, password,uuidFilename);
-		
+
+		ReqProfileDto dto = new ReqProfileDto(id, password, uuidFilename);
+
+		StringBuffer sb = new StringBuffer();
 		int result = userService.회원수정(dto);
-		
+
 		if (result == 1) {
-			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
-		} else
-			return new ResponseEntity<RespCM>(new RespCM(400, "fail"), HttpStatus.BAD_REQUEST);
+			sb.append("<script>");
+			sb.append("alert('수정완료');");
+			sb.append("location.href='/';");
+			sb.append("</script>");
+			return sb.toString();
+		} else {
+			sb.append("<script>");
+			sb.append("alert('수정실패');");
+			sb.append("history.back;");
+			sb.append("</script>");
+			return sb.toString();
+		}
 	}
 
 	// 메세지 컨버터는 request받을 때 setter로 호출한다.
@@ -119,8 +131,7 @@ public class UserController {
 		if (result == -2) {
 			return new ResponseEntity<RespCM>(new RespCM(ReturnCode.아이디중복, "아이디중복"), HttpStatus.OK);
 		} else if (result == 1) {
-			return new ResponseEntity<RespCM>(new 
-					RespCM(200, "ok"), HttpStatus.OK);
+			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
 		} else
 			return new ResponseEntity<RespCM>(new RespCM(500, "fail"), HttpStatus.INTERNAL_SERVER_ERROR);
 	}

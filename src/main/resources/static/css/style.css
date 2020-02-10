@@ -10,3 +10,11 @@
 		margin-left: 15px;
 	}
 }
+
+.my__nav {
+	background-color: pink;
+}
+
+.my__nav__text {
+	color: black;
+}

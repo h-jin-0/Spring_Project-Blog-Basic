@@ -16,9 +16,9 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 	
 
-	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+	<nav class="my__nav navbar navbar-expand-md  ">
 		<!-- Brand -->
-		<a class="navbar-brand" href="/">HJ</a>
+		<a class="my__nav__text navbar-brand" href="/">HJ</a>
 
 		<!-- Toggler/collapsibe Button -->
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -27,29 +27,29 @@
 
 		<!-- Navbar links -->
 		<div class="collapse navbar-collapse" id="collapsibleNavbar">
-			<ul class="navbar-nav">
+			<ul class=" navbar-nav">
 
 				<c:choose>
 					<c:when test="${not empty sessionScope.principal}">
 						<li class="nav-item">
-						<a class="nav-link" href="/post/write">글쓰기</a></li>
+						<a class="my__nav__text nav-link" href="/post/write">글쓰기</a></li>
 
 						<li class="nav-item">
-						<a class="nav-link" href="/user/profile/${sessionScope.principal.id}">회원정보수정</a></li>
+						<a class="my__nav__text nav-link" href="/user/profile/${sessionScope.principal.id}">회원정보수정</a></li>
 						
 						<li class="nav-item">
-						<a class="nav-link" href="/user/logout">로그아웃</a></li>
+						<a class="my__nav__text nav-link" href="/user/logout">로그아웃</a></li>
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item">
-						<a class="nav-link" href="/user/join">회원가입</a></li>
+						<a class="my__nav__text nav-link" href="/user/join">회원가입</a></li>
 
 						<li class="nav-item">
-						<a class="nav-link" href="/user/login">로그인</a></li>
+						<a class="my__nav__text nav-link" href="/user/login">로그인</a></li>
 					</c:otherwise>
 				</c:choose>
 			</ul>
-			<img src="/images/dd.jpg" class="rounded-circle my__img ml-auto" width="30px" onerror="javascript:this.src='/images/unknown.jpg'"/>
+			<img src="/media/${sessionScope.principal.profile}" class="rounded-circle my__img ml-auto" width="30px" onerror="javascript:this.src='/images/unknown.jpg'"/>
 		</div>
 	</nav>
 	<br />

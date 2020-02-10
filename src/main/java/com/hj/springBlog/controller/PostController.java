@@ -91,7 +91,7 @@ public class PostController {
 	
 	@DeleteMapping("/post/delete")
 	public ResponseEntity<?> delete(@Valid @RequestBody ReqDeleteDto dto) {
-System.out.println(dto.getId());
+
 		int result = postService.글삭제(dto);
 		if (result == 1)
 			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
