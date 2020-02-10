@@ -11,4 +11,5 @@ public interface UserRepository {
 	int findByUsername(String username);
 	User findByUsernameAndPassword(ReqLoginDto dto);
 	int update(ReqProfileDto dto);
+	User findById(int id);
 }

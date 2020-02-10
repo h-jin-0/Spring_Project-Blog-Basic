@@ -24,7 +24,7 @@
 		};
 
 		$.ajax({
-			type : 'POST',
+			type : 'PUT',
 			url : '/post/update',
 			data : JSON.stringify(data),
 			contentType : 'application/json; charset=utf-8',

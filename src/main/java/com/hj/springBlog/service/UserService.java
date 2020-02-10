@@ -1,5 +1,7 @@
 package com.hj.springBlog.service;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,9 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private HttpSession session;
+	
 	@Transactional
 	public int 회원가입(ReqJoinDto dto) {
 		try {
@@ -39,7 +44,14 @@ public class UserService {
 	}
 	@Transactional
 	public int 회원수정(ReqProfileDto dto) {
-
-		return userRepository.update(dto);
+		int result=userRepository.update(dto);
+		if(result==1) {
+			User user= userRepository.findById(dto.getId());
+			session.setAttribute("principal", user);
+			return 1;
+		}else {
+			return -1;
+		}
+		
 	}
 }

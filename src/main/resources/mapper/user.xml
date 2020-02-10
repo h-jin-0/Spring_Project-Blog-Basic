@@ -4,25 +4,35 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hj.springBlog.repository.UserRepository">
 
-	<select id="findAll" resultType="com.hj.springBlog.model.user.User">
+	<select id="findAll"
+		resultType="com.hj.springBlog.model.user.User">
 		select * from user order by id desc
 	</select>
 
 	<insert id="save">
-		insert into user(username,password,email,createDate) 
-		values(#{username},#{password},#{email},now()) 
+		insert into user(username,password,email,createDate)
+		values(#{username},#{password},#{email},now())
 	</insert>
-	
+
 	<select id="findByUsername" resultType="int">
-		select count(*) from user where username=#{username}
+		select count(*) from user
+		where username=#{username}
 	</select>
-	
-	<select id="findByUsernameAndPassword" resultType="com.hj.springBlog.model.user.User">
-		select id,username,email,profile from user where username=#{username} and password=#{password}
+
+	<select id="findByUsernameAndPassword"
+		resultType="com.hj.springBlog.model.user.User">
+		select id,username,email,profile from user where
+		username=#{username} and password=#{password}
 	</select>
-	
+
 	<update id="update">
-		update user set password=#{password}, profile=#{profile} where id=#{id}
+		update user set password=#{password},
+		profile=#{profile} where id=#{id}
 	</update>
-	
+
+	<select id="findById"
+		resultType="com.hj.springBlog.model.user.User">
+		select id,username,email,profile,createDate from user where id=#{id}
+	</select>
+
 </mapper>

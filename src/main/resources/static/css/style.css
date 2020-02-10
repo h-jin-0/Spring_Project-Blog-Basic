@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+@media only screen and (max-width:800px) {
+	.my__img {
+		display: none;
+	}
+	.my__profile {
+		font-size: 15px;
+		margin-top: 5px;
+		margin-left: 15px;
+	}
+}

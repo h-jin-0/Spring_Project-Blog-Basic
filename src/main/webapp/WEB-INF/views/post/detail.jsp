@@ -11,8 +11,8 @@
 			<p class="card-text">${post.content}</p>
 		</div>
 		<div class="card-footer">
-			<a id="post--update--submit" href="/post/update/${post.id}?userId=${post.userId}" class="btn btn-warning">수정</a>
-			<button id="post--delete--submit" class="btn btn-danger">삭제</button>
+			<a id="post--update--submit" href="/post/update/${post.id}" class="btn btn-warning">수정</a>
+			<button id="post--delete--submit" value="${post.id}" class="btn btn-danger">삭제</button>
 			<a href="/" class="btn btn-primary">목록</a>
 		</div>
 	</div>
@@ -48,12 +48,12 @@
 		</div>
 	</div>
 </div>
-<input type="hidden" id="postId" value="${post.id}" />
+
 <script>
 $('#post--delete--submit').on('click',function(){
 
 		var data = {
-			id : $('#postId').val()
+			id : $('#post--delete--submit').val()
 		};
 
 		$.ajax({
@@ -67,7 +67,6 @@ $('#post--delete--submit').on('click',function(){
 				alert('글 삭제 성공');
 				location.href = '/';
 			} else {
-
 				alert('글 삭제 실패');
 			}
 		}).fail(function(r) {

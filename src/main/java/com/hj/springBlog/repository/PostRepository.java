@@ -6,10 +6,11 @@ import com.hj.springBlog.model.post.Post;
 import com.hj.springBlog.model.post.dto.ReqDeleteDto;
 import com.hj.springBlog.model.post.dto.ReqUpdateDto;
 import com.hj.springBlog.model.post.dto.ReqWriteDto;
+import com.hj.springBlog.model.post.dto.RespListDto;
 
 public interface PostRepository {
 
-	List<Post> findAll();
+	List<RespListDto> findAll();
 	int save(ReqWriteDto dto);
 	Post findById(int postId);
 	int update(ReqUpdateDto dto);

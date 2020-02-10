@@ -11,15 +11,17 @@
 			<tr>
 				<th>글 번호</th>
 				<th>제목</th>
+				<th>작성자</th>
 				<th>작성 시간</th>
 			</tr>
 		</thead>
 
 		<tbody>
-			<c:forEach var="post" items="${ posts}">
+			<c:forEach var="post" items="${posts}">
 				<tr>
 					<td>${post.id}</td>
 					<td><a href="/post/${post.id}"> ${post.title}</a></td>
+					<td>${post.username}</td>
 					<td>${post.createDate}</td>
 				</tr>
 			</c:forEach>

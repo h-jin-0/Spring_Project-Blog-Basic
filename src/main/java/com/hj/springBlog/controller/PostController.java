@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -68,30 +69,29 @@ public class PostController {
 
 	// 인증 체크, 동일인 체크
 	@GetMapping("/post/update/{postId}")
-	public String update(@PathVariable int postId, @RequestParam int userId, Model model) {
-		User principal = (User) session.getAttribute("principal");
-
-		if (principal.getId() == userId) {
-			model.addAttribute("post", postService.글상세보기(postId));
-			return "/post/update";
-		} else {
-			return "/user/login";
-		}
+	public String update(@PathVariable int postId, Model model) {
+		model.addAttribute("post", postService.수정하기(postId));
+		
+		return "/post/update";
 	}
 
-	@PostMapping("/post/update")
+	@PutMapping("/post/update")
 	public ResponseEntity<?> update(@Valid @RequestBody ReqUpdateDto dto) {
 
-		int result = postService.글수정(dto);
-		if (result == 1)
-			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
-		else
-			return new ResponseEntity<RespCM>(new RespCM(500, "fail"), HttpStatus.INTERNAL_SERVER_ERROR);
+		int result = postService.수정완료(dto);
+		
+		if(result == 1) {
+			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);	
+		}else if(result == -3) {
+			return new ResponseEntity<RespCM>(new RespCM(403, "fail"), HttpStatus.FORBIDDEN);
+		}else {
+			return new ResponseEntity<RespCM>(new RespCM(400, "fail"), HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@DeleteMapping("/post/delete")
 	public ResponseEntity<?> delete(@Valid @RequestBody ReqDeleteDto dto) {
-
+System.out.println(dto.getId());
 		int result = postService.글삭제(dto);
 		if (result == 1)
 			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);

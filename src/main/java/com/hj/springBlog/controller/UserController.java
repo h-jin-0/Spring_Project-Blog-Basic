@@ -21,6 +21,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,6 +38,9 @@ import com.hj.springBlog.service.UserService;
 public class UserController {
 
 	private static final String TAG = "UserContriller : ";
+	
+	@Value("${file.path}")
+	private String fileRealPath;//서버에 배포하면 경로 변경해야함!!!!!
 
 	@Autowired
 	private UserService userService;
@@ -73,14 +77,10 @@ public class UserController {
 		}
 
 	}
-	@Value("${file.path}")
-	private String fileRealPath;
 
-	@PostMapping("/user/profile")
-	public String profile(String password, @RequestParam("profile") MultipartFile profile) {
+	@PutMapping("/user/profile")
+	public ResponseEntity<?> profile(int id,String password, @RequestParam MultipartFile profile) {
 
-		User principal = (User) session.getAttribute("principal");
-		
 		UUID uuid =UUID.randomUUID();
 		String uuidFilename=uuid+"_"+profile.getOriginalFilename();
 		
@@ -92,14 +92,14 @@ public class UserController {
 			e.printStackTrace();
 		}
 		
-		ReqProfileDto dto = new ReqProfileDto(principal.getId(), password,uuidFilename);
+		ReqProfileDto dto = new ReqProfileDto(id, password,uuidFilename);
 		
 		int result = userService.회원수정(dto);
 		
 		if (result == 1) {
-			return "redirect:/";
+			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
 		} else
-			return "redirect:/user/profile";
+			return new ResponseEntity<RespCM>(new RespCM(400, "fail"), HttpStatus.BAD_REQUEST);
 	}
 
 	// 메세지 컨버터는 request받을 때 setter로 호출한다.
@@ -119,7 +119,8 @@ public class UserController {
 		if (result == -2) {
 			return new ResponseEntity<RespCM>(new RespCM(ReturnCode.아이디중복, "아이디중복"), HttpStatus.OK);
 		} else if (result == 1) {
-			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
+			return new ResponseEntity<RespCM>(new 
+					RespCM(200, "ok"), HttpStatus.OK);
 		} else
 			return new ResponseEntity<RespCM>(new RespCM(500, "fail"), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
