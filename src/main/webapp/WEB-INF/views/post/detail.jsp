@@ -20,6 +20,7 @@
 	<div class="card">
 		<div class="form-group">
 			<div class="card-body">
+				<input type="hidden" id="postId" value="${post.id}" /> <input type="hidden" id="userId" value="${sessionScope.principal.id}" />
 				<textarea rows="2" class="form-control" id="content"></textarea>
 			</div>
 			<div class="card-footer">
@@ -30,52 +31,25 @@
 	<br />
 	<div class="card">
 		<div class="form-group">
-
 			<div class="card-header">
 				<h4 class="card-title">댓글 리스트</h4>
 			</div>
-			<div class="comment--items card-body">
-				<div class="comment--item">
-					<span class="comment--content">댓글내용</span> 
-					<span class="comment--delete--submit" value="1">X</span>
-				</div>
-				<div class="comment--item">
-					<span class="comment--content">댓글내용</span> 
-					<span class="comment--delete--submit" value="1">X</span>
-				</div>
+
+			<div id="comment--items" class=" card-body">
+				<c:forEach var="comment" items="${comments}">
+					<div id="comment--item--${comment.id}">
+						<span class="comment--content">${comment.content}</span> <span class="comment--username">작성자 :${comment.username} </span>
+						<c:if test="${comment.userId eq sessionScope.principal.id }">
+							<button onclick="commentDelete(${comment.id})" class="btn btn-danger">삭제</button>
+						</c:if>
+					</div>
+				</c:forEach>
 			</div>
-			
+
+
 		</div>
 	</div>
 </div>
-
-<script>
-$('#post--delete--submit').on('click',function(){
-
-		var data = {
-			id : $('#post--delete--submit').val()
-		};
-
-		$.ajax({
-			type : 'DELETE',
-			url : '/post/delete',
-			data : JSON.stringify(data),
-			contentType : 'application/json; charset=utf-8',
-			dataType : 'json'
-		}).done(function(r) {
-			if (r.statusCode == 200) {
-				alert('글 삭제 성공');
-				location.href = '/';
-			} else {
-				alert('글 삭제 실패');
-			}
-		}).fail(function(r) {
-			alert('글 삭제 실패');
-		});
-
-});
-</script>
-
-
+<script src="/js/detail.js"></script>
 
 <%@include file="../include/footer.jsp"%>

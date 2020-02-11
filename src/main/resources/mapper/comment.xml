@@ -2,12 +2,36 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hj.springBlog.repository.CommentRepository">
+<mapper
+	namespace="com.hj.springBlog.repository.CommentRepository">
 
-<select id="findAll" resultType="com.hj.springBlog.model.comment.Comment">
-		select * from user comment by id desc
+	<select id="findByPostId"
+		resultType="com.hj.springBlog.model.comment.dto.RespDetailDto">
+		select
+		c.id,c.userId,c.postId,c.content,c.createDate,u.username
+		from comment c inner join user u
+		on c.userId=u.id
+		where c.postId=#{postId}
+		order by c.id desc
 	</select>
 
+	<select id="findById"
+		resultType="com.hj.springBlog.model.comment.dto.RespDetailDto">
+		select
+		c.id,c.userId,c.postId,c.content,c.createDate,u.username
+		from comment c inner join user u
+		on c.userId=u.id
+		where c.id=#{id}
+	</select>
 
+	<insert id="save" useGeneratedKeys="true" keyProperty="id"
+		parameterType="com.hj.springBlog.model.comment.dto.ReqDetailDto">
+		insert into comment(userId,postId,content,createDate)
+		values(#{userId},#{postId},#{content},now())
+	</insert>
+	
+	<delete id="delete">
+		delete from comment where id=#{id}
+	</delete>
 
 </mapper>

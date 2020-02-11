@@ -2,6 +2,7 @@ package com.hj.springBlog.model.user;
 
 import java.sql.Timestamp;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,13 @@ public class User {
 	private String email;
 	private String profile;
 	private Timestamp createDate;
+	@Builder
+	public User(String username, String password, String email, String profile) {
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.profile = profile;
+	}
 	
 
 }
