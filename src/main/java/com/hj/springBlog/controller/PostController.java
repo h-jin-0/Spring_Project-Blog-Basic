@@ -22,6 +22,7 @@ import com.hj.springBlog.model.post.dto.ReqDeleteDto;
 import com.hj.springBlog.model.post.dto.ReqUpdateDto;
 import com.hj.springBlog.model.post.dto.ReqWriteDto;
 import com.hj.springBlog.model.user.User;
+import com.hj.springBlog.service.CommentService;
 import com.hj.springBlog.service.PostService;
 
 //security 구현 완료
@@ -30,6 +31,9 @@ public class PostController {
 
 	@Autowired
 	private PostService postService;
+	
+	@Autowired
+	private CommentService commentService;
 
 	@Autowired
 	private HttpSession session;
@@ -44,6 +48,7 @@ public class PostController {
 	@GetMapping("/post/{postId}")
 	public String post(@PathVariable int postId, Model model) {
 
+		model.addAttribute("comments", commentService.댓글목록보기(postId));
 		model.addAttribute("post", postService.글상세보기(postId));
 		return "/post/detail";
 	}

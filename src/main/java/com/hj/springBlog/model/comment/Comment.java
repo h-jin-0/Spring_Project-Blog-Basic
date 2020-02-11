@@ -3,9 +3,11 @@ package com.hj.springBlog.model.comment;
 import java.sql.Timestamp;
 
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
+@Data
+@NoArgsConstructor
 public class Comment {
 	private int id;
 	private int userId;
@@ -14,11 +16,10 @@ public class Comment {
 	private Timestamp createDate;
 	
 	@Builder
-	public Comment(int userId, int postId, String content, Timestamp createDate) {
+	public Comment(int userId, int postId, String content) {
 		this.userId = userId;
 		this.postId = postId;
 		this.content = content;
-		this.createDate = createDate;
 	}
 
 	

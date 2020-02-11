@@ -22,7 +22,7 @@ public class PostService {
 	
 	@Autowired
 	private PostRepository postRepository;
-	
+
 
 	@Autowired
 	private HttpSession session;
@@ -70,7 +70,6 @@ public class PostService {
 		}else {
 			return null;
 		}
-		
 	}
 	
 }
