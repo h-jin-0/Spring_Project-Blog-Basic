@@ -5,15 +5,15 @@
 
 	<form>
 		<div class="form-group">
-			<label for="username">유저네임</label> <input type="text" class="form-control" id="username" placeholder="Enter Username" />
+			<label for="username">UserName</label> <input type="text" class="form-control" id="username" placeholder="Enter Username" />
 		</div>
 		<div class="form-group">
-			<label for="password">비밀번호</label> <input type="password" class="form-control" id="password" placeholder="Enter password" />
+			<label for="password">Password</label> <input type="password" class="form-control" id="password" placeholder="Enter password" />
 		</div>
 
 	</form>
 
-	<button id="login--submit" class="btn btn-primary">로그인</button>
+	<button id="login--submit" class="btn my__bg__pink">Login</button>
 </div>
 <script>
 	$('#login--submit').on('click', function() {
@@ -25,13 +25,15 @@
 		$.ajax({
 			type : 'POST',
 			url : '/user/login',
-			data : JSON.stringify(data),
-			contentType : 'application/json; charset=utf-8',
+			data : data,
+			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 			dataType : 'json'
 		}).done(function(r) {
+			console.log(r)
 			alert('로그인 성공');
 			location.href = "/";
 		}).fail(function(r) {
+			console.log(r)
 			alert('로그인 실패');
 		});
 	});

@@ -1,8 +1,7 @@
 package com.hj.springBlog.service;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,18 +17,25 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
-
+	
 	@Autowired
-	private HttpSession session;
+	private MyUserDetailService myUserDetailService;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Transactional
 	public int 회원가입(ReqJoinDto dto) {
 		try {
 			//아이디 중복체크
 			int result=userRepository.findByUsername(dto.getUsername());
+
 			if(result==1) {
 				return ReturnCode.아이디중복;
 			}else {
+				//패스워드 암호화 하기!
+				String encodePassword=passwordEncoder.encode(dto.getPassword());
+				dto.setPassword(encodePassword);//암호화되서 들어간다.토큰이 알아서 바꿔서해준다.
 				return userRepository.save(dto);
 			}
 			
@@ -44,10 +50,14 @@ public class UserService {
 	}
 	@Transactional
 	public int 회원수정(ReqProfileDto dto) {
+		User principal=myUserDetailService.getPrincipal();//여기서 세션을 들고옴
+	
+		String encodePassword=passwordEncoder.encode(dto.getPassword());
 		int result=userRepository.update(dto);
 		if(result==1) {
 			User user= userRepository.findById(dto.getId());
-			session.setAttribute("principal", user);
+			principal.setPassword(encodePassword);
+			principal.setProfile(user.getProfile());
 			return 1;
 		}else {
 			return -1;

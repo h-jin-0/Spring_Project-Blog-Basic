@@ -2,8 +2,6 @@ package com.hj.springBlog.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +17,6 @@ public class CommentService {
 	@Autowired
 	private CommentRepository commentRepository;
 
-	@Autowired
-	private HttpSession session;
-
 	public RespDetailDto 댓글등록(ReqDetailDto dto) {
 		int result = commentRepository.save(dto);
 
@@ -32,9 +27,9 @@ public class CommentService {
 		}
 	}
 
-	public int 댓글삭제(int id) {
+	public int 댓글삭제(int id,User principal) {
 		RespDetailDto comment = commentRepository.findById(id);
-		User principal = (User) session.getAttribute("principal");
+
 		if (principal.getId() == comment.getUserId()) {
 			return commentRepository.delete(id);
 		} else {

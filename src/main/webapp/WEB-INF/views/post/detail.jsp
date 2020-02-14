@@ -39,7 +39,7 @@
 				<c:forEach var="comment" items="${comments}">
 					<div id="comment--item--${comment.id}">
 						<span class="comment--content">${comment.content}</span> <span class="comment--username">작성자 :${comment.username} </span>
-						<c:if test="${comment.userId eq sessionScope.principal.id }">
+						<c:if test="${comment.userId eq principal.id }">
 							<button onclick="commentDelete(${comment.id})" class="btn btn-danger">삭제</button>
 						</c:if>
 					</div>
