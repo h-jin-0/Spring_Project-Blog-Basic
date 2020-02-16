@@ -78,6 +78,7 @@ public class PostService {
 	}
 	public int totalCount() {
 		return postRepository.totalCount();//레코드 갯수 가져오는
+
 	}
 	
 }

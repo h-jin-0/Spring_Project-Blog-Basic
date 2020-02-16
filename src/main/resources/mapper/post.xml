@@ -23,6 +23,10 @@
 		p.id desc
 	</select>
 
+	<select id="findAll" resultType="com.hj.springBlog.model.post.dto.RespListDto"	>
+	select p.id, p.title, p.content, p.userId, p.createDate,
+		u.username from post p inner join user u on p.userId = u.id order by p.id desc</select>
+
 	<insert id="save">
 		insert into post(title,content,userId,createDate)
 		values(#{title},#{content},#{userId},now())

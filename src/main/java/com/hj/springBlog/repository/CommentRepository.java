@@ -9,10 +9,7 @@ public interface CommentRepository {
 
 //	List<ResponseTeamDto> TeamAll();
 	int save(ReqDetailDto dto);
-
 	RespDetailDto findById(int id);
-
 	int delete(int id);
-
 	List<RespDetailDto> findByPostId(int postId);
 }

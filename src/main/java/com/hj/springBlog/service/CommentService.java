@@ -24,6 +24,8 @@ public class CommentService {
 
 	public RespDetailDto 댓글등록(ReqDetailDto dto) {
 		int result = commentRepository.save(dto);
+
+		System.out.println("CommentService id : "+dto.getId());
 		
 		if(result == 1) { // 댓글쓰기 성공
 			//  select

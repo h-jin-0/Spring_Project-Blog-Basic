@@ -53,7 +53,6 @@ $('#conmment--save--submit').on('click', function() {
 });
 
 function makeCommentItem(r) {
-
 	var comment_item = `<div id="comment--item--${r.id}"><div class="d-flex">`;
 	comment_item += `<h6 class="comment--username"><strong>${r.username}</strong></h6> `;
 	comment_item += `<button onclick="commentDelete(${r.id})" class="btn btn-danger ml-auto">삭제</button> `;
@@ -67,6 +66,19 @@ function commentDelete(commentId) {
 	$.ajax({
 		type : 'DELETE',
 		url : '/comment/delete/' + commentId,
+
+	var comment_item = `<div id="comment--item--${r.id}">`;
+	comment_item += `<span class="comment--username">작성자:${r.username} </span> `;
+	comment_item += `<span class="comment--content">${r.content} </span> `;
+	comment_item += `<button onclick="commentDelete(${r.id})" class="btn btn-danger">삭제</button>`;
+	comment_item += `</div>`;
+	$('#comment--items').prepend(comment_item);
+};
+function commentDelete(commentId){
+
+	$.ajax({
+		type : 'DELETE',
+		url : '/comment/delete/'+commentId,
 
 	}).done(function(r) {
 		if (r.statusCode == 200) {

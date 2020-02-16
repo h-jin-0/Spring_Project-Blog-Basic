@@ -35,7 +35,7 @@
 		<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="i">
 			<c:choose>
 				<c:when test="${paging.cri.page==i}">
-					<li class="page-item active"><a class="page-link" href="#">${i}</a></li>
+					<li class="page-item active"><a class="page-link">${i}</a></li>
 				</c:when>
 				<c:otherwise>
 					<li class="page-item"><a class="page-link" href="${i}">${i}</a></li>
@@ -48,5 +48,24 @@
 		</c:if>
 	</ul>
 </div>
+	<form id="jobForm">
+		<input type="hidden" name="page" value="${pageMaker.cri.page}">
+		<input type="hidden" name="perPageNum" value="${pageMaker.cri.perPageNum}">
 
+	</form>
+	<script >
+		var jobForm = $("#jobForm");
+		var searchForm = $("#searchForm")
+
+		$(".pagination a").on("click", function(event) {
+			event.preventDefault();
+
+			var targetPage = $(this).attr("href");
+
+			jobForm.find("[name='page']").val(targetPage);
+			jobForm.attr("action", "/list").attr("method", "get");
+			jobForm.submit();
+		});
+		</script>
+		
 <%@include file="../include/footer.jsp"%>

@@ -38,6 +38,7 @@
 			<div id="comment--items" class=" card-body">
 				<c:forEach var="comment" items="${comments}">
 					<div id="comment--item--${comment.id}">
+
 						<div class="d-flex">
 							<h6 class="comment--username">
 								<strong>${comment.username}</strong>
@@ -48,6 +49,11 @@
 						</div>
 						<div class="comment--content">${comment.content}</div>
 						<hr>
+						<span class="comment--content">${comment.content}</span> <span class="comment--username">작성자 :${comment.username} </span>
+						<c:if test="${comment.userId eq sessionScope.principal.id }">
+							<button onclick="commentDelete(${comment.id})" class="btn btn-danger">삭제</button>
+						</c:if>
+
 					</div>
 				</c:forEach>
 			</div>
