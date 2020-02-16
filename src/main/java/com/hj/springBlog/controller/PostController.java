@@ -43,8 +43,8 @@ public class PostController {
 
 	@GetMapping({ "", "/", "/post" })
 	public String posts(@ModelAttribute("cri") Criteria cri, Model model) {
-		cri.setPage(1);
-		cri.setPerPageNum(10);
+		cri.setPage(cri.getPage());
+		cri.setPerPageNum(cri.getPerPageNum());
 		int totalCount = postService.totalCount();
 		Paging paging = new Paging();
 		paging.setCri(cri);

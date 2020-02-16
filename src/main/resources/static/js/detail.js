@@ -1,6 +1,8 @@
 /**
  * 
  */
+
+
 $('#post--delete--submit').on('click', function() {
 
 	var data = {
