@@ -49,11 +49,7 @@
 						</div>
 						<div class="comment--content">${comment.content}</div>
 						<hr>
-						<span class="comment--content">${comment.content}</span> <span class="comment--username">작성자 :${comment.username} </span>
-						<c:if test="${comment.userId eq sessionScope.principal.id }">
-							<button onclick="commentDelete(${comment.id})" class="btn btn-danger">삭제</button>
-						</c:if>
-
+						
 					</div>
 				</c:forEach>
 			</div>
