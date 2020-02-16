@@ -13,7 +13,7 @@
 
 	</form>
 
-	<button id="login--submit" class="btn btn-primary">로그인</button>
+	<button id="login--submit" class="btn my__bg__pink">로그인</button>
 </div>
 <script>
 	$('#login--submit').on('click', function() {

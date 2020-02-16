@@ -13,7 +13,7 @@
 		</div>
 	</form>
 
-	<button id="write--submit" class="btn btn-primary">등록</button>
+	<button id="write--submit" class="btn my__bg__pink">등록</button>
 </div>
 <script>
 	$('#write--submit').on('click', function() {

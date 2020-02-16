@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hj.springBlog.model.ReturnCode;
 import com.hj.springBlog.model.post.Post;
+import com.hj.springBlog.model.post.dto.Criteria;
 import com.hj.springBlog.model.post.dto.ReqDeleteDto;
+import com.hj.springBlog.model.post.dto.ReqPaging;
 import com.hj.springBlog.model.post.dto.ReqUpdateDto;
 import com.hj.springBlog.model.post.dto.ReqWriteDto;
 import com.hj.springBlog.model.post.dto.RespListDto;
@@ -33,8 +35,11 @@ public class PostService {
 	}
 	
 	@Transactional
-	public List<RespListDto> 글목록() {
-		return postRepository.findAll();
+	public List<RespListDto> 글목록(Criteria cri) {
+		ReqPaging reqPaging=new ReqPaging();
+		reqPaging.setStartLimit((cri.getPage()-1)*cri.getPerPageNum());
+		reqPaging.setEndLimit(cri.getPerPageNum());
+		return postRepository.listPaging(reqPaging);
 	}
 	
 	@Transactional
@@ -70,6 +75,9 @@ public class PostService {
 		}else {
 			return null;
 		}
+	}
+	public int totalCount() {
+		return postRepository.totalCount();//레코드 갯수 가져오는
 	}
 	
 }

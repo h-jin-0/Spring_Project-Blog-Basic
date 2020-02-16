@@ -24,10 +24,11 @@ public class CommentService {
 
 	public RespDetailDto 댓글등록(ReqDetailDto dto) {
 		int result = commentRepository.save(dto);
-
-		if (result == 1) {
+		
+		if(result == 1) { // 댓글쓰기 성공
+			//  select
 			return commentRepository.findById(dto.getId());
-		} else {
+		}else { // 댓글쓰기 실패
 			return null;
 		}
 	}

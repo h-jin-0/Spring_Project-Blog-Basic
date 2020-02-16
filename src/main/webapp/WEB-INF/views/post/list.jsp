@@ -1,11 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-
 <%@include file="../include/nav.jsp"%>
 
 <div class="container">
-	<h2>Bordered Table</h2>
-	<p>The .table-bordered class adds borders on all sides of the table and the cells:</p>
+
 	<table class="table table-bordered">
 		<thead class="thead-light">
 			<tr>
@@ -20,13 +18,35 @@
 			<c:forEach var="post" items="${posts}">
 				<tr>
 					<td>${post.id}</td>
-					<td><a href="/post/${post.id}"> ${post.title}</a></td>
+					<td><a class="my__nav__text" href="/post/${post.id}"> ${post.title}</a></td>
 					<td>${post.username}</td>
-					<td>${post.createDate}</td>
+					<td><fmt:formatDate value="${post.createDate}" pattern="yyyy-MM-dd hh:mm"/></td>
+
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
+	<ul class="pagination justify-content-center">
+		<c:if test="${paging.prev}">
+			<li class="page-item">
+			<a class="page-link" href="${paging.startPage-1}">Previous</a>
+			</li>
+		</c:if>
+		<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="i">
+			<c:choose>
+				<c:when test="${paging.cri.page==i}">
+					<li class="page-item active"><a class="page-link" href="#">${i}</a></li>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item"><a class="page-link" href="${i}">${i}</a></li>
+
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+		<c:if test="${paging.next}">
+			<li class="page-item"><a class="page-link" href="${paging.endPage+1 }">Next</a></li>
+		</c:if>
+	</ul>
 </div>
 
 <%@include file="../include/footer.jsp"%>

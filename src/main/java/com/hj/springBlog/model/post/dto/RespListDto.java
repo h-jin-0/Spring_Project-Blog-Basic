@@ -1,5 +1,6 @@
 package com.hj.springBlog.model.post.dto;
 
+
 import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
@@ -16,4 +17,5 @@ public class RespListDto {
 	private int userId;
 	private Timestamp createDate;
 	private String username;
+
 }

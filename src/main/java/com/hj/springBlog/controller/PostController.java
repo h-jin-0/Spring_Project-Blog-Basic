@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hj.springBlog.model.RespCM;
+import com.hj.springBlog.model.post.dto.Criteria;
+import com.hj.springBlog.model.post.dto.Paging;
 import com.hj.springBlog.model.post.dto.ReqDeleteDto;
 import com.hj.springBlog.model.post.dto.ReqUpdateDto;
 import com.hj.springBlog.model.post.dto.ReqWriteDto;
@@ -31,7 +34,7 @@ public class PostController {
 
 	@Autowired
 	private PostService postService;
-	
+
 	@Autowired
 	private CommentService commentService;
 
@@ -39,9 +42,17 @@ public class PostController {
 	private HttpSession session;
 
 	@GetMapping({ "", "/", "/post" })
-	public String posts(Model model) {
+	public String posts(@ModelAttribute("cri") Criteria cri, Model model) {
+		cri.setPage(1);
+		cri.setPerPageNum(10);
+		int totalCount = postService.totalCount();
+		Paging paging = new Paging();
+		paging.setCri(cri);
+		paging.setTotalCount(totalCount);
 
-		model.addAttribute("posts", postService.글목록());
+		model.addAttribute("paging", paging);
+		model.addAttribute("posts", postService.글목록(cri));
+
 		return "/post/list";
 	}
 
@@ -76,7 +87,7 @@ public class PostController {
 	@GetMapping("/post/update/{postId}")
 	public String update(@PathVariable int postId, Model model) {
 		model.addAttribute("post", postService.수정하기(postId));
-		
+
 		return "/post/update";
 	}
 
@@ -84,16 +95,16 @@ public class PostController {
 	public ResponseEntity<?> update(@Valid @RequestBody ReqUpdateDto dto) {
 
 		int result = postService.수정완료(dto);
-		
-		if(result == 1) {
-			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);	
-		}else if(result == -3) {
+
+		if (result == 1) {
+			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
+		} else if (result == -3) {
 			return new ResponseEntity<RespCM>(new RespCM(403, "fail"), HttpStatus.FORBIDDEN);
-		}else {
+		} else {
 			return new ResponseEntity<RespCM>(new RespCM(400, "fail"), HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@DeleteMapping("/post/delete")
 	public ResponseEntity<?> delete(@Valid @RequestBody ReqDeleteDto dto) {
 

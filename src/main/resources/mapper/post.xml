@@ -4,9 +4,24 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hj.springBlog.repository.PostRepository">
 
-	<select id="findAll" resultType="com.hj.springBlog.model.post.dto.RespListDto"	>
-	select p.id, p.title, p.content, p.userId, p.createDate,
-		u.username from post p inner join user u on p.userId = u.id order by p.id desc</select>
+	<select id="listPaging"
+		resultType="com.hj.springBlog.model.post.dto.RespListDto">
+		select p.id, p.title, p.content, p.userId, p.createDate ,u.username from post
+		p inner join user u on p.userId = u.id order by p.id desc limit
+		#{startLimit},#{endLimit}
+	</select>
+
+	<select id="totalCount" resultType="int">
+		select count(*) from post
+	</select>
+
+	<select id="findAll"
+		resultType="com.hj.springBlog.model.post.dto.RespListDto">
+		select p.id, p.title, p.content, p.userId, p.createDate,
+		u.username from post
+		p inner join user u on p.userId = u.id order by
+		p.id desc
+	</select>
 
 	<insert id="save">
 		insert into post(title,content,userId,createDate)
@@ -17,7 +32,7 @@
 		resultType="com.hj.springBlog.model.post.Post">
 		select id,title,content,userId,createDate from post where
 		id=#{postId}
-		
+
 	</select>
 
 	<update id="update">

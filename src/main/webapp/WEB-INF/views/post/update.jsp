@@ -12,7 +12,7 @@
 			<textarea rows="5" class="form-control" id="content">${post.content}</textarea>
 		</div>
 	</form>
-	<button id="update--submit" class="btn btn-primary">수정</button>
+	<button id="update--submit" class="btn my__bg__pink">수정</button>
 </div>
 <input type="hidden" id="postId" value="${post.id}" />
 <script>

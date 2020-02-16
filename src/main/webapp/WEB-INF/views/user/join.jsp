@@ -15,7 +15,7 @@
 		</div>
 	</form>
 
-	<button id="join--submit" class="btn btn-primary">회원가입</button>
+	<button id="join--submit" class="btn my__bg__pink">회원가입</button>
 </div>
 <script src="/js/join.js"></script>
 <%@include file="../include/footer.jsp"%>

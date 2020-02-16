@@ -29,7 +29,7 @@
 			<p class="my__profile">${sessionScope.principal.profile}</p>
 		</div>
 		
-		<button class="btn btn-primary">수정</button>
+		<button class="btn my__bg__pink">수정</button>
 		
 	</form:form>
 	

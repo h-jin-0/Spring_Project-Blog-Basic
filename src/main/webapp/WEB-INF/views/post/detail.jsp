@@ -24,7 +24,7 @@
 				<textarea rows="2" class="form-control" id="content"></textarea>
 			</div>
 			<div class="card-footer">
-				<button id="conmment--save--submit" class="btn btn-primary">등록</button>
+				<button id="conmment--save--submit" class="btn my__bg__pink">등록</button>
 			</div>
 		</div>
 	</div>
@@ -38,10 +38,16 @@
 			<div id="comment--items" class=" card-body">
 				<c:forEach var="comment" items="${comments}">
 					<div id="comment--item--${comment.id}">
-						<span class="comment--content">${comment.content}</span> <span class="comment--username">작성자 :${comment.username} </span>
-						<c:if test="${comment.userId eq sessionScope.principal.id }">
-							<button onclick="commentDelete(${comment.id})" class="btn btn-danger">삭제</button>
-						</c:if>
+						<div class="d-flex">
+							<h6 class="comment--username">
+								<strong>${comment.username}</strong>
+							</h6>
+							<c:if test="${comment.userId eq sessionScope.principal.id }">
+								<button onclick="commentDelete(${comment.id})" class="btn btn-danger ml-auto">삭제</button>
+							</c:if>
+						</div>
+						<div class="comment--content">${comment.content}</div>
+						<hr>
 					</div>
 				</c:forEach>
 			</div>
